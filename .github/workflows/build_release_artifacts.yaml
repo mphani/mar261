@@ -135,7 +135,7 @@ jobs:
         run: |
           cd pkg/target
 
-          for file in aerospike-prome*; do
+          for file in aerospike-prome*.rpm aerospike-prome*.deb ; do
             if [ -f "$file" ]; then
               echo "Uploading $file to release $TAG_NAME"
               gh release upload "$TAG_NAME" "$file"
