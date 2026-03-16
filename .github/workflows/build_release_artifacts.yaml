@@ -18,10 +18,12 @@ jobs:
           - arch: amd64
             make_target: package-linux-amd64
             goarch: amd64
+            # OM-280, commented, if required we enable this in future/on-demand 
             #tar_arch: x86_64
           - arch: arm64
             make_target: package-linux-arm64
             goarch: arm64
+            # OM-280, commented, if required we enable this in future/on-demand 
             #tar_arch: aarch64
     steps:
       - name: Harden the runner (Audit all outbound calls)
@@ -135,8 +137,9 @@ jobs:
         run: |
           cd pkg/target
 
-          for file in aerospike-prome*.rpm aerospike-prome*.deb ; do
-            if [ -f "$file" ]; then
+          for file in aerospike-prome* ; do
+            # OM-280, commented, if required we enable this in future/on-demand 
+            if [ -f "$file" ] && [[ "$file" != *.tar && "$file" != *.tgz && "$file" != *.tar.gz ]]; then
               echo "Uploading $file to release $TAG_NAME"
               gh release upload "$TAG_NAME" "$file"
             fi
